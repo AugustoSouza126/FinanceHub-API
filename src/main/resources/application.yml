@@ -1,6 +1,0 @@
-spring:
-    application:
-        name: financehub-api
-
-    profiles:
-        active: dev

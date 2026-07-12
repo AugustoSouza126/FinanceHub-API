@@ -1,6 +1,8 @@
 package com.augustosouza.financehub.auth.service;
 
 
+import com.augustosouza.financehub.auth.dto.LoginRequest;
+import com.augustosouza.financehub.auth.dto.LoginResponse;
 import com.augustosouza.financehub.auth.dto.RegisterRequest;
 import com.augustosouza.financehub.auth.dto.RegisterResponse;
 import com.augustosouza.financehub.common.exception.EmailAlreadyExistsException;
@@ -11,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import com.augustosouza.financehub.common.exception.EmailAlreadyExistsException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class AuthService {
 
     private final UserRepository repository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     public RegisterResponse register(RegisterRequest request){
 
@@ -43,5 +45,23 @@ public class AuthService {
                 .build();
 
     }
+
+    public LoginResponse login(LoginRequest request) {
+
+        User user = repository.findByEmail(request.email())
+                .orElseThrow(() -> new RuntimeException("Invalid email or password."));
+
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+            throw new RuntimeException("Invalid email or password.");
+        }
+
+        String token = jwtService.generateToken(user.getEmail());
+
+        return LoginResponse.builder()
+                .token(token)
+                .build();
+    }
+
+
 
 }

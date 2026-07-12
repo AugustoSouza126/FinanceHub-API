@@ -15,6 +15,9 @@ spring:
   flyway:
     enabled: true
 
-logging:
-  level:
-    org.springframework.boot.context.config: INFO
+server:
+  port: 8081
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}

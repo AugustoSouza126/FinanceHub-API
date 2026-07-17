@@ -55,4 +55,30 @@ public class JwtService {
 
     }
 
+    public Date extractExpiration(String token) {
+
+        return Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getExpiration();
+
+    }
+
+    private boolean isTokenExpired(String token) {
+
+        return extractExpiration(token).before(new Date());
+
+    }
+
+    public boolean isTokenValid(String token, String email) {
+
+        String extractedEmail = extractEmail(token);
+
+        return extractedEmail.equals(email)
+                && !isTokenExpired(token);
+
+    }
+
 }

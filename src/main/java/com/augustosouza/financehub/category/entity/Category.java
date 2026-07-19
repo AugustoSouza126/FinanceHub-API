@@ -8,6 +8,7 @@ import lombok.*;
 @Table(name = "categories")
 @Getter
 @Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

@@ -1,85 +1,283 @@
 # 💰 FinanceHub API
 
-A RESTful API for personal finance management built with **Spring Boot**.
+Uma API REST desenvolvida com **Spring Boot** para gerenciamento financeiro pessoal.
 
-This project is being developed to strengthen my backend skills using modern Java technologies and best development practices.
+O sistema permite que usuários cadastrem categorias, registrem receitas e despesas, acompanhem seu saldo financeiro através de um dashboard e gerenciem todas as suas movimentações com autenticação JWT.
 
-## 🚀 Technologies
+---
+
+
+# 🚀 Tecnologias
 
 - Java 21
-- Spring Boot 3.5
+- Spring Boot 3
 - Spring Security
-- Spring Data JPA
+- JWT (JSON Web Token)
 - PostgreSQL
+- Spring Data JPA
 - Flyway
-- Lombok
 - Maven
+- Swagger / OpenAPI
+- Lombok
+- Docker (em breve)
 
-## 📂 Project Structure
+---
+
+# 📋 Funcionalidades
+
+## Autenticação
+
+- Cadastro de usuários
+- Login utilizando JWT
+- Autenticação Bearer Token
+- Rotas protegidas
+
+---
+
+## Categorias
+
+- Criar categoria
+- Listar categorias
+- Buscar categoria por ID
+- Atualizar categoria
+- Remover categoria
+
+Cada categoria pertence apenas ao usuário autenticado.
+
+---
+
+## Transações
+
+- Criar transação
+- Listar transações
+- Buscar por ID
+- Atualizar transação
+- Remover transação
+- Paginação
+
+Cada transação pertence exclusivamente ao usuário autenticado.
+
+---
+
+## Dashboard
+
+Resumo financeiro contendo:
+
+- Total de Receitas
+- Total de Despesas
+- Saldo Atual
+
+---
+
+## Validações
+
+- Bean Validation
+- Tratamento global de exceções
+- Respostas padronizadas de erro
+
+---
+
+## Documentação
+
+Documentação automática utilizando Swagger/OpenAPI.
+
+---
+
+# 🔒 Segurança
+
+A autenticação é realizada utilizando **JWT (JSON Web Token)**.
+
+Todas as rotas (exceto autenticação) exigem um token válido.
+
+Fluxo:
 
 ```
-src/main/java/com/augustosouza/financehub
+Login
 
+↓
+
+JWT
+
+↓
+
+Bearer Token
+
+↓
+
+Requisições autenticadas
+```
+
+---
+
+# 📂 Estrutura do Projeto
+
+```
+src/main/java
+│
 ├── auth
+│
 ├── category
+│
 ├── common
+│
 ├── config
+│
+├── dashboard
+│
 ├── transaction
+│
 └── user
 ```
 
-## ✅ Implemented Features
+---
 
-### Infrastructure
-- Spring Boot project configuration
-- PostgreSQL integration
-- Flyway database migrations
-- Layered project architecture
-- Spring Security configuration
+# 📚 Endpoints
 
-### Authentication
-- User registration endpoint
-- Password encryption with BCrypt
-- Request validation
-- Global exception handling
+## Auth
 
-### Database
-- Initial migration (users table)
-- User entity mapping with JPA
-- User repository
+| Método | Endpoint |
+|---------|----------|
+| POST | /auth/register |
+| POST | /auth/login |
 
-## 🛠️ Running the project
+---
 
-Clone the repository:
+## Usuário
+
+| Método | Endpoint |
+|---------|----------|
+| GET | /users/me |
+
+---
+
+## Categorias
+
+| Método | Endpoint |
+|---------|----------|
+| GET | /categories |
+| GET | /categories/{id} |
+| POST | /categories |
+| PUT | /categories/{id} |
+| DELETE | /categories/{id} |
+
+---
+
+## Transações
+
+| Método | Endpoint |
+|---------|----------|
+| GET | /transactions |
+| GET | /transactions/{id} |
+| POST | /transactions |
+| PUT | /transactions/{id} |
+| DELETE | /transactions/{id} |
+
+Suporte à paginação:
+
+```
+GET /transactions?page=0&size=10
+```
+
+---
+
+## Dashboard
+
+| Método | Endpoint |
+|---------|----------|
+| GET | /dashboard |
+
+---
+
+# ▶️ Como executar
+
+## Clonar o projeto
 
 ```bash
 git clone https://github.com/AugustoSouza126/FinanceHub-API.git
 ```
 
-Enter the project directory:
-
 ```bash
 cd FinanceHub-API
 ```
 
-Run the application:
+---
+
+## Banco de Dados
+
+Configure um banco PostgreSQL e altere o arquivo:
+
+```
+application.properties
+```
+
+com suas credenciais.
+
+---
+
+## Executar
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-## 📌 Project Status
+ou execute diretamente pela IDE.
 
-🚧 Under development.
+---
 
-The next step is implementing:
+# 📖 Swagger
 
-- User authentication (JWT)
-- Login endpoint
-- Categories
-- Transactions
-- Financial dashboard
+Após iniciar a aplicação:
 
-## 📄 License
+```
+http://localhost:8081/swagger-ui/index.html
+```
 
-This project was developed for educational purposes and portfolio demonstration.
+---
+
+# 🛠 Arquitetura
+
+A aplicação foi organizada em módulos por domínio, facilitando manutenção e escalabilidade.
+
+```
+Controller
+
+↓
+
+Service
+
+↓
+
+Repository
+
+↓
+
+PostgreSQL
+```
+
+---
+
+# 📌 Próximas melhorias
+
+- Frontend Angular
+- Deploy da API
+- Docker Compose
+- Dashboard com gráficos
+- Testes automatizados
+
+---
+
+# 👨‍💻 Autor
+
+**Augusto Souza**
+
+GitHub
+
+https://github.com/AugustoSouza126
+
+LinkedIn
+
+https://www.linkedin.com/in/augusto-souza-795324313/
+
+---
+
+⭐ Caso tenha gostado do projeto, deixe uma estrela no repositório.

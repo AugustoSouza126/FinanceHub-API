@@ -9,8 +9,8 @@ import com.augustosouza.financehub.transaction.repository.TransactionRepository;
 import com.augustosouza.financehub.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 @RequiredArgsConstructor
@@ -43,18 +43,17 @@ public class TransactionService {
                 .build();
     }
 
-    public List<TransactionResponse> findAll(User user) {
 
-        return transactionRepository.findByUser(user)
-                .stream()
+    public Page<TransactionResponse> findAll(User user, Pageable pageable) {
+
+        return transactionRepository.findByUser(user, pageable)
                 .map(transaction -> TransactionResponse.builder()
                         .id(transaction.getId())
                         .description(transaction.getDescription())
                         .amount(transaction.getAmount())
                         .date(transaction.getDate())
                         .category(transaction.getCategory().getName())
-                        .build())
-                .toList();
+                        .build());
 
     }
 

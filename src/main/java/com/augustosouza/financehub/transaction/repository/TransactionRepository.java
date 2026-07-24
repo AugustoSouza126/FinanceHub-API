@@ -5,13 +5,15 @@ import com.augustosouza.financehub.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.math.BigDecimal;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-    List<Transaction> findByUser(User user);
+    Page<Transaction> findByUser(User user, Pageable pageable);
 
     Optional<Transaction> findByIdAndUser(Long id, User user);
 

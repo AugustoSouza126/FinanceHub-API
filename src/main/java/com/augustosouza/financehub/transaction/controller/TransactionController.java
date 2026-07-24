@@ -8,8 +8,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/transactions")
@@ -28,11 +29,14 @@ public class TransactionController {
 
     }
 
+
+
     @GetMapping
-    public List<TransactionResponse> findAll(
-            @AuthenticationPrincipal User user
+    public Page<TransactionResponse> findAll(
+            @AuthenticationPrincipal User user,
+            Pageable pageable
     ) {
-        return service.findAll(user);
+        return service.findAll(user, pageable);
     }
 
     @GetMapping("/{id}")

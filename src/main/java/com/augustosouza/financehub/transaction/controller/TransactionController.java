@@ -1,0 +1,63 @@
+package com.augustosouza.financehub.transaction.controller;
+
+import com.augustosouza.financehub.transaction.dto.TransactionRequest;
+import com.augustosouza.financehub.transaction.dto.TransactionResponse;
+import com.augustosouza.financehub.transaction.service.TransactionService;
+import com.augustosouza.financehub.user.entity.User;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/transactions")
+@RequiredArgsConstructor
+public class TransactionController {
+
+    private final TransactionService service;
+
+    @PostMapping
+    public TransactionResponse create(
+            @RequestBody @Valid TransactionRequest request,
+            @AuthenticationPrincipal User user
+    ) {
+
+        return service.create(request, user);
+
+    }
+
+    @GetMapping
+    public List<TransactionResponse> findAll(
+            @AuthenticationPrincipal User user
+    ) {
+        return service.findAll(user);
+    }
+
+    @GetMapping("/{id}")
+    public TransactionResponse findById(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user
+    ) {
+        return service.findById(id, user);
+    }
+
+    @PutMapping("/{id}")
+    public TransactionResponse update(
+            @PathVariable Long id,
+            @RequestBody @Valid TransactionRequest request,
+            @AuthenticationPrincipal User user
+    ) {
+        return service.update(id, request, user);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user
+    ) {
+        service.delete(id, user);
+    }
+
+}

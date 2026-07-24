@@ -243,5 +243,3 @@ LinkedIn
 https://www.linkedin.com/in/augusto-souza-795324313/
 
 ---
-
-## ⭐ If you found this project useful, consider giving it a star.
